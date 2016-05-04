@@ -3,7 +3,12 @@
   vars:
     rancher_name: rancher_server
     rancher_port: 8080
-  remote_user: root
+    rancher_version: v1.0.1
+    rancher_db_host: dbhost.xxx
+    rancher_db_name: dbname
+    rancher_db_user: dbuser
+    rancher_db_pass: dbpass 
+    
   
   tasks:
   - name: Fail if OS distro is not Ubuntu 14.04
@@ -58,9 +63,16 @@
     when: docker_users is defined
 
   - name: Pull and run the Rancher/server contianer
-  docker:
+    docker:
       name: "{{ rancher_name }}"
-      image: rancher/server:latest
+      image: rancher/server:{{ rancher_version }}
       restart_policy: always
       ports: 
         - "{{ rancher_port }}:8080"
+      env:
+        CATTLE_DB_CATTLE_MYSQL_HOST: {{ rancher_db_host }}
+        CATTLE_DB_CATTLE_MYSQL_PORT: {{ rancher_version }}
+        CATTLE_DB_CATTLE_MYSQL_NAME: {{ rancher_db_name }}
+        CATTLE_DB_CATTLE_USERNAME: {{ rancher_db_user }}
+        CATTLE_DB_CATTLE_PASSWORD: {{ rancher_db_pass }}
+                
