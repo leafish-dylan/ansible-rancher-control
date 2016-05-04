@@ -56,13 +56,3 @@
       state=present
     with_items: docker_users
     when: docker_users is defined
-
-  - name: Configure Docker 
-    template: 
-      src=default_docker.j2 
-      dest=/etc/default/docker 
-      mode=0644 
-      owner=root 
-      group=root
-    notify: restart docker
-
