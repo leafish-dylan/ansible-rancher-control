@@ -70,9 +70,9 @@
       ports: 
         - "{{ rancher_port }}:8080"
       env:
-        CATTLE_DB_CATTLE_MYSQL_HOST: {{ rancher_db_host }}
-        CATTLE_DB_CATTLE_MYSQL_PORT: {{ rancher_version }}
-        CATTLE_DB_CATTLE_MYSQL_NAME: {{ rancher_db_name }}
-        CATTLE_DB_CATTLE_USERNAME: {{ rancher_db_user }}
-        CATTLE_DB_CATTLE_PASSWORD: {{ rancher_db_pass }}
+        CATTLE_DB_CATTLE_MYSQL_HOST: "{{ rancher_db_host }}"
+        CATTLE_DB_CATTLE_MYSQL_PORT: "{{ rancher_version }}"
+        CATTLE_DB_CATTLE_MYSQL_NAME: "{{ rancher_db_name }}"
+        CATTLE_DB_CATTLE_USERNAME: "{{ rancher_db_user }}"
+        CATTLE_DB_CATTLE_PASSWORD: "{{ rancher_db_pass }}"
                 
