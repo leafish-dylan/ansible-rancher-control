@@ -5,7 +5,9 @@
     rancher_server: 127.0.0.1
     rancher_port: 8080
     rancher_agent_name: "agent"
-    rancher_agent_version: v1.0.1 
+    rancher_agent_version: v1.0.1
+    rancher_api_access_key: foo
+    rancher_api_access_secret: bar
   
   tasks:
   - name: Fail if OS distro is not Ubuntu 14.04
@@ -69,6 +71,8 @@
       method=GET
       status_code=200
       url="http://{{ rancher_server }}:{{ rancher_port }}/v1/projects" return_content=yes
+      user=rancher_api_access_key
+      password=rancher_api_access_secret
     register: project_id
 
   - name: Return the registration token URL of Rancher server
@@ -76,12 +80,16 @@
       method=POST
       status_code=201
       url="http://{{ rancher_server }}:{{ rancher_port }}/v1/registrationtokens?projectId={{ project_id.json['data'][0]['id'] }}" return_content=yes
+      user=rancher_api_access_key
+      password=rancher_api_access_secret
     register: rancher_token_url
 
   - name: Return the registration URL of Rancher server
     action: uri 
       method=GET 
       url={{ rancher_token_url.json['links']['self'] }} return_content=yes
+      user=rancher_api_access_key
+      password=rancher_api_access_secret
     register: rancher_token
 
   - name: Check if the rancher-agent is running
